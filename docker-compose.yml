@@ -9,7 +9,8 @@ services:
       - ${ES_PORT}:9200
     restart: always
     environment:
-      - xpack.security.enabled=false
+      - xpack.security.enabled=${ES_AUTH}
+      - ELASTIC_PASSWORD=${ES_PASSWORD}
       - discovery.type=single-node
     ulimits:
       memlock:
@@ -27,6 +28,8 @@ services:
     restart: always
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME="kibana"
+      - ELASTICSEARCH_PASSWORD=${KIBANA_SYSTEM_PASSWORD}
 volumes:
   elasticsearch-data:
     driver: local
